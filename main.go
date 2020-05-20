@@ -1,6 +1,9 @@
 package main
-import "fmt"
 
-func main()  {
-  fmt.Println("Hello World")
+import (
+  term "github.com/dev/termFarm/term"
+)
+
+func main() {
+  term.MainTerm()
 }
