@@ -1,6 +1,7 @@
 package term
 
 import tl "github.com/JoelOtter/termloop"
+// import fmt "fmt"
 
 type Pointer struct {
 	*tl.Entity
@@ -9,26 +10,27 @@ type Pointer struct {
 func Mainterm() {
 	g := tl.NewGame()
 	g.Screen().SetFps(60)
-	// pointer := Pointer{tl.NewEntity(1,1,1,1)}
-	// pointer.SetCell(0, 0, &tl.Cell({Fg: tl.ColorRed, Ch: '>'}))
-	pointer := Pointer{tl.NewEntityFromCanvas(1,1,tl.CanvasFromString(string(" > ")))}
-	e1 := tl.NewEntityFromCanvas(5, 1, tl.CanvasFromString(string("1.Start")))
-	e2 := tl.NewEntityFromCanvas(5, 2, tl.CanvasFromString(string("2.Option")))
-	e3 := tl.NewEntityFromCanvas(5, 3, tl.CanvasFromString(string("3.Quit")))
+	pointer := Pointer{tl.NewEntityFromCanvas(1,4,tl.CanvasFromString(string(" > ")))}
+
 	g.Screen().AddEntity(&pointer)
-	g.Screen().AddEntity(e1)
-	g.Screen().AddEntity(e2)
-	g.Screen().AddEntity(e3)
+	g.Screen().AddEntity(tl.NewEntityFromCanvas(5, 4, tl.CanvasFromString(string("1.Start"))))
+	g.Screen().AddEntity(tl.NewEntityFromCanvas(5, 5, tl.CanvasFromString(string("2.Load"))))
+	g.Screen().AddEntity(tl.NewEntityFromCanvas(5, 6, tl.CanvasFromString(string("3.Quit"))))
 	g.Start()
 }
 
 func (p *Pointer) Tick(ev tl.Event) {
+	_, y:= p.Position()
 	if ev.Type == tl.EventKey {
 		switch ev.Key {
 		case tl.KeyArrowUp:
-			p.SetPosition(1,3)
+			if y > 4 {
+				p.SetPosition(1, y-1)
+			}
 		case tl.KeyArrowDown:
-			p.SetPosition(1,2)
+			if y < 6 {
+				p.SetPosition(1, y+1)
+			}
 		}
 	}
 }
