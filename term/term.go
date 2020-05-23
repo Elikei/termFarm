@@ -1,67 +1,34 @@
 package term
 
-import "fmt"
-import termbox "github.com/nsf/termbox-go"
+import tl "github.com/JoelOtter/termloop"
 
-func MainTerm() {
-	var menu = [3]string{"1.Start", "2.Option", "3.Quit"}
-	err := termbox.Init()
-	if err != nil {
-		panic(err)
-	}
-	defer termbox.Close()
-	var pointer = 1
-	// termbox.SetInputMode(termbox.InputEsc | termbox.InputMouse)
-	// termbox.SetOutputMode(termbox.Output256)
-	fmt.Println("Welcome to termFarm 🏘")
-	PrintMenu(1, menu)
-	Loop:
-	for {
-		switch ev := termbox.PollEvent(); ev.Type {
-		case termbox.EventKey:
-			switch ev.Key {
-			case termbox.KeyEsc:
-				fmt.Println("👋 Bye~ ")
-				break Loop
-			case termbox.KeyArrowUp:
-				if pointer > 1 {
-					pointer--
-				}
-				PrintMenu(pointer, menu)
-			case termbox.KeyArrowDown:
-				if pointer < len(menu) {
-					pointer++
-				}
-				PrintMenu(pointer, menu)
-			// case termbox.KeyArrowLeft:
-			// 	fmt.Println(" ")
-			// case termbox.KeyArrowRight:
-			// 	fmt.Println(" ")
-			case termbox.KeyEnter:
-				fmt.Println("👋 Enter~ ")
-				break Loop
-			default:
-			}
+type Pointer struct {
+	*tl.Entity
+}
+
+func Mainterm() {
+	g := tl.NewGame()
+	g.Screen().SetFps(60)
+	// pointer := Pointer{tl.NewEntity(1,1,1,1)}
+	// pointer.SetCell(0, 0, &tl.Cell({Fg: tl.ColorRed, Ch: '>'}))
+	pointer := Pointer{tl.NewEntityFromCanvas(1,1,tl.CanvasFromString(string(" > ")))}
+	e1 := tl.NewEntityFromCanvas(5, 1, tl.CanvasFromString(string("1.Start")))
+	e2 := tl.NewEntityFromCanvas(5, 2, tl.CanvasFromString(string("2.Option")))
+	e3 := tl.NewEntityFromCanvas(5, 3, tl.CanvasFromString(string("3.Quit")))
+	g.Screen().AddEntity(&pointer)
+	g.Screen().AddEntity(e1)
+	g.Screen().AddEntity(e2)
+	g.Screen().AddEntity(e3)
+	g.Start()
+}
+
+func (p *Pointer) Tick(ev tl.Event) {
+	if ev.Type == tl.EventKey {
+		switch ev.Key {
+		case tl.KeyArrowUp:
+			p.SetPosition(1,3)
+		case tl.KeyArrowDown:
+			p.SetPosition(1,2)
 		}
 	}
 }
-
-func PrintMenu(num int, menu[3]string) {
-	var unpoint = "   "
-	var point = " > "
-	var i int
-	for i = 0; i < len(menu); i++ {
-		if num == i+1 {
-			fmt.Println(point + menu[i])
-		} else {
-			fmt.Println(unpoint + menu[i])
-		}
-	}
-}
-
-// func Clean(num int) {
-// 	var i int
-// 	for i =0; i<num;i++ {
-// 		fmt.Println("\r")
-// 	}
-// }
