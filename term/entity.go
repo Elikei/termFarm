@@ -1,9 +1,7 @@
-package entity
+package term
 
 import tl "github.com/JoelOtter/termloop"
-import os "os"
-
-// import profile "github.com/dev/termFarm/profile"
+import event "github.com/dev/termFarm/event"
 
 type Screen struct {
 	Level      *tl.BaseLevel
@@ -72,12 +70,10 @@ func (p *Pointer) Tick(ev tl.Event) {
 func mainMenuRoute(position int) {
 	switch position {
 	case 4:
-		// profile.NewProfile()
+		event.NewProfileEvent()
 	case 5:
-
-		// load save
-		// fmt.Println(">Load")
+		event.LoadProfileEvent()
 	default:
-		os.Exit(1)
+		event.ExitEvent()
 	}
 }
