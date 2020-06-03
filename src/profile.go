@@ -1,9 +1,8 @@
-package profile
+package src
 
 import os "os"
 import fmt "fmt"
 import random "math/rand"
-// import term "github.com/dev/termFarm/term"
 
 func NewProfile() {
   profileName := profileNameGen()
@@ -20,7 +19,7 @@ func NewProfile() {
   		os.Exit(1)
   	}
   }
-  term.Mainterm()
+
 }
 
 func LoadProfile() {

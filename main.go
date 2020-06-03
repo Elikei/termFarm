@@ -1,9 +1,12 @@
 package main
 
-import (
- term "github.com/dev/termFarm/term"
-)
+import tl "github.com/JoelOtter/termloop"
+import src "github.com/dev/termFarm/src"
 
 func main() {
-	term.Mainterm()
+  game := tl.NewGame()
+  s := src.NewScreen()
+  s.LoadMainMenu()
+  game.Screen().SetLevel(s.Level)
+  game.Start()
 }

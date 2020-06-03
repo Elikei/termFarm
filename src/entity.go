@@ -1,7 +1,6 @@
-package term
+package src
 
 import tl "github.com/JoelOtter/termloop"
-import event "github.com/dev/termFarm/event"
 
 type Screen struct {
 	Level      *tl.BaseLevel
@@ -70,10 +69,10 @@ func (p *Pointer) Tick(ev tl.Event) {
 func mainMenuRoute(position int) {
 	switch position {
 	case 4:
-		event.NewProfileEvent()
+		NewProfileEvent()
 	case 5:
-		event.LoadProfileEvent()
+		LoadProfileEvent()
 	default:
-		event.ExitEvent()
+		ExitEvent()
 	}
 }
